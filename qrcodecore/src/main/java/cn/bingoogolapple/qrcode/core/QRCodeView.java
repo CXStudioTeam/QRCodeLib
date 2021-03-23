@@ -404,7 +404,7 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
             mSpotAble = false;
             try {
                 if (mDelegate != null) {
-                    mDelegate.onScanQRCodeSuccess(result);
+                    mDelegate.onScanQRCodeSuccess(scanResult);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -414,8 +414,7 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
 
     void onPostParseBitmapOrPicture(ScanResult scanResult) {
         if (mDelegate != null) {
-            String result = scanResult == null ? null : scanResult.result;
-            mDelegate.onScanQRCodeSuccess(result);
+            mDelegate.onScanQRCodeSuccess(scanResult);
         }
     }
 
@@ -544,7 +543,7 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
         mAutoZoomAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                onPostParseData(new ScanResult(result));
+                onPostParseData(new ScanResult(result, null));
             }
         });
         mAutoZoomAnimator.setDuration(600);
@@ -562,7 +561,7 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
     }
 
     private PointF transform(float originX, float originY, float cameraPreviewWidth, float cameraPreviewHeight, boolean isMirrorPreview, int statusBarHeight,
-            final Rect scanBoxAreaRect) {
+                             final Rect scanBoxAreaRect) {
         int viewWidth = getWidth();
         int viewHeight = getHeight();
 
@@ -603,7 +602,7 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
          *
          * @param result 摄像头扫码时只要回调了该方法 result 就一定有值，不会为 null。解析本地图片或 Bitmap 时 result 可能为 null
          */
-        void onScanQRCodeSuccess(String result);
+        void onScanQRCodeSuccess(ScanResult result);
 
         /**
          * 摄像头环境亮度发生变化

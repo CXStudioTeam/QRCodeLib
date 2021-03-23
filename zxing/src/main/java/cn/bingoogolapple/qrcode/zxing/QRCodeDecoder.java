@@ -141,7 +141,7 @@ public class QRCodeDecoder {
      * @param picturePath 要解析的二维码图片本地路径
      * @return 返回二维码图片里的内容 或 null
      */
-    public static String syncDecodeQRCode(String picturePath) {
+    public static Result syncDecodeQRCode(String picturePath) {
         return syncDecodeQRCode(BGAQRCodeUtil.getDecodeAbleBitmap(picturePath));
     }
 
@@ -151,7 +151,7 @@ public class QRCodeDecoder {
      * @param bitmap 要解析的二维码图片
      * @return 返回二维码图片里的内容 或 null
      */
-    public static String syncDecodeQRCode(Bitmap bitmap) {
+    public static Result syncDecodeQRCode(Bitmap bitmap) {
         Result result;
         RGBLuminanceSource source = null;
         try {
@@ -161,13 +161,13 @@ public class QRCodeDecoder {
             bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
             source = new RGBLuminanceSource(width, height, pixels);
             result = new MultiFormatReader().decode(new BinaryBitmap(new HybridBinarizer(source)), ALL_HINT_MAP);
-            return result.getText();
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
             if (source != null) {
                 try {
                     result = new MultiFormatReader().decode(new BinaryBitmap(new GlobalHistogramBinarizer(source)), ALL_HINT_MAP);
-                    return result.getText();
+                    return result;
                 } catch (Throwable e2) {
                     e2.printStackTrace();
                 }

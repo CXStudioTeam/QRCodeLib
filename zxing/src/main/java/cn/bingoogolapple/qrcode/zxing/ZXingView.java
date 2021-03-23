@@ -77,7 +77,12 @@ public class ZXingView extends QRCodeView {
 
     @Override
     protected ScanResult processBitmapData(Bitmap bitmap) {
-        return new ScanResult(QRCodeDecoder.syncDecodeQRCode(bitmap));
+        Result result = QRCodeDecoder.syncDecodeQRCode(bitmap);
+        if (result == null) {
+            return new ScanResult(null, null);
+        }
+
+        return new ScanResult(result.getText(), result.getBarcodeFormat());
     }
 
     @Override
@@ -135,7 +140,7 @@ public class ZXingView extends QRCodeView {
                 return null;
             }
         }
-        return new ScanResult(result);
+        return new ScanResult(result, rawResult.getBarcodeFormat());
     }
 
     private boolean isNeedAutoZoom(BarcodeFormat barcodeFormat) {

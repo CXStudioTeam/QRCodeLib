@@ -2,21 +2,33 @@ package cn.bingoogolapple.qrcode.core;
 
 import android.graphics.PointF;
 
-/**
- * 作者:王浩
- * 创建时间:2018/6/15
- * 描述:
- */
+import com.google.zxing.BarcodeFormat;
+
 public class ScanResult {
     String result;
+    BarcodeFormat barcodeFormat;
     PointF[] resultPoints;
 
-    public ScanResult(String result) {
+    public ScanResult(String result, BarcodeFormat barcodeFormat) {
         this.result = result;
+        this.barcodeFormat = barcodeFormat;
     }
 
-    public ScanResult(String result, PointF[] resultPoints) {
+    public ScanResult(String result, BarcodeFormat barcodeFormat, PointF[] resultPoints) {
         this.result = result;
+        this.barcodeFormat = barcodeFormat;
         this.resultPoints = resultPoints;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public BarcodeFormat getBarcodeFormat() {
+        return barcodeFormat;
+    }
+
+    public PointF[] getResultPoints() {
+        return resultPoints;
     }
 }
