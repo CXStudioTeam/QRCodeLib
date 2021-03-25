@@ -12,11 +12,11 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+
 
 public class BGAQRCodeUtil {
     private static boolean debug;
@@ -29,27 +29,11 @@ public class BGAQRCodeUtil {
         return debug;
     }
 
-    public static void d(String msg) {
-        d("BGAQRCode", msg);
-    }
 
-    public static void printRect(String prefix, Rect rect) {
-        d("BGAQRCodeFocusArea", prefix + " centerX：" + rect.centerX() + " centerY：" + rect.centerY() + " width：" + rect.width() + " height：" + rect.height()
-                + " rectHalfWidth：" + rect.width() / 2 + " rectHalfHeight：" + rect.height() / 2
-                + " left：" + rect.left + " top：" + rect.top + " right：" + rect.right + " bottom：" + rect.bottom);
-    }
 
-    public static void d(String tag, String msg) {
-        if (debug) {
-            Log.d(tag, msg);
-        }
-    }
 
-    public static void e(String msg) {
-        if (debug) {
-            Log.e("BGAQRCode", msg);
-        }
-    }
+
+
 
     /**
      * 是否为竖屏

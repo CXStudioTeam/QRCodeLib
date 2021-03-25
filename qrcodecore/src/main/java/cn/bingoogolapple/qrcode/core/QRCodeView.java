@@ -298,7 +298,6 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
     @Override
     public void onPreviewFrame(final byte[] data, final Camera camera) {
         if (BGAQRCodeUtil.isDebug()) {
-            BGAQRCodeUtil.d("两次 onPreviewFrame 时间间隔：" + (System.currentTimeMillis() - mLastPreviewFrameTime));
             mLastPreviewFrameTime = System.currentTimeMillis();
         }
 
@@ -358,7 +357,6 @@ public abstract class QRCodeView extends RelativeLayout implements Camera.Previe
                     break;
                 }
             }
-            BGAQRCodeUtil.d("摄像头环境亮度为：" + cameraLight);
             if (mDelegate != null) {
                 mDelegate.onCameraAmbientBrightnessChanged(isDarkEnv);
             }

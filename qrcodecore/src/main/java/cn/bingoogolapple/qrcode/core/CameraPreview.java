@@ -130,7 +130,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         int rectHalfWidth = scanRect.width() / 2;
         int rectHalfHeight = scanRect.height() / 2;
 
-        BGAQRCodeUtil.printRect("转换前", scanRect);
 
         if (BGAQRCodeUtil.isPortrait(getContext())) {
             int temp = centerX;
@@ -142,9 +141,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             rectHalfHeight = temp;
         }
         scanRect = new Rect(centerX - rectHalfWidth, centerY - rectHalfHeight, centerX + rectHalfWidth, centerY + rectHalfHeight);
-        BGAQRCodeUtil.printRect("转换后", scanRect);
 
-        BGAQRCodeUtil.d("扫码框发生变化触发对焦测光");
         handleFocusMetering(scanRect.centerX(), scanRect.centerY(), scanRect.width(), scanRect.height());
     }
 
@@ -159,7 +156,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 return true;
             }
             mIsTouchFocusing = true;
-            BGAQRCodeUtil.d("手指触摸触发对焦测光");
             float centerX = event.getX();
             float centerY = event.getY();
             if (BGAQRCodeUtil.isPortrait(getContext())) {
@@ -194,18 +190,14 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         if (params.isZoomSupported()) {
             int zoom = params.getZoom();
             if (isZoomIn && zoom < params.getMaxZoom()) {
-                BGAQRCodeUtil.d("放大");
                 zoom++;
             } else if (!isZoomIn && zoom > 0) {
-                BGAQRCodeUtil.d("缩小");
                 zoom--;
             } else {
-                BGAQRCodeUtil.d("既不放大也不缩小");
             }
             params.setZoom(zoom);
             camera.setParameters(params);
         } else {
-            BGAQRCodeUtil.d("不支持缩放");
         }
     }
 
@@ -216,30 +208,26 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             Camera.Parameters focusMeteringParameters = mCamera.getParameters();
             Camera.Size size = focusMeteringParameters.getPreviewSize();
             if (focusMeteringParameters.getMaxNumFocusAreas() > 0) {
-                BGAQRCodeUtil.d("支持设置对焦区域");
                 isNeedUpdate = true;
                 Rect focusRect = BGAQRCodeUtil.calculateFocusMeteringArea(1f,
                         originFocusCenterX, originFocusCenterY,
                         originFocusWidth, originFocusHeight,
                         size.width, size.height);
-                BGAQRCodeUtil.printRect("对焦区域", focusRect);
                 focusMeteringParameters.setFocusAreas(Collections.singletonList(new Camera.Area(focusRect, 1000)));
                 focusMeteringParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
             } else {
-                BGAQRCodeUtil.d("不支持设置对焦区域");
             }
 
             if (focusMeteringParameters.getMaxNumMeteringAreas() > 0) {
-                BGAQRCodeUtil.d("支持设置测光区域");
                 isNeedUpdate = true;
                 Rect meteringRect = BGAQRCodeUtil.calculateFocusMeteringArea(1.5f,
                         originFocusCenterX, originFocusCenterY,
                         originFocusWidth, originFocusHeight,
                         size.width, size.height);
-                BGAQRCodeUtil.printRect("测光区域", meteringRect);
                 focusMeteringParameters.setMeteringAreas(Collections.singletonList(new Camera.Area(meteringRect, 1000)));
+
             } else {
-                BGAQRCodeUtil.d("不支持设置测光区域");
+
             }
 
             if (isNeedUpdate) {
@@ -247,11 +235,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 mCamera.setParameters(focusMeteringParameters);
                 mCamera.autoFocus(new Camera.AutoFocusCallback() {
                     public void onAutoFocus(boolean success, Camera camera) {
-                        if (success) {
-                            BGAQRCodeUtil.d("对焦测光成功");
-                        } else {
-                            BGAQRCodeUtil.e("对焦测光失败");
-                        }
                         startContinuousAutoFocus();
                     }
                 });
@@ -260,7 +243,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             }
         } catch (Exception e) {
             e.printStackTrace();
-            BGAQRCodeUtil.e("对焦测光失败：" + e.getMessage());
             startContinuousAutoFocus();
         }
     }
@@ -281,7 +263,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             // 要实现连续的自动对焦，这一句必须加上
             mCamera.cancelAutoFocus();
         } catch (Exception e) {
-            BGAQRCodeUtil.e("连续对焦失败");
         }
     }
 

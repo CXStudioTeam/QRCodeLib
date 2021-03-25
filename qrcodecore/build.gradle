@@ -3,12 +3,12 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 30
 
-//    defaultConfig {
-//        minSdkVersion ANDROID_BUILD_MIN_SDK_VERSION as int
-//        targetSdkVersion ANDROID_BUILD_TARGET_SDK_VERSION as int
-//    }
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 30
+    }
 }
 
 dependencies {
-    implementation 'com.google.zxing:core:3.3.3'
+    implementation "com.google.zxing:core:$zxing_core_version"
 }

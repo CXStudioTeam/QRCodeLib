@@ -3,7 +3,7 @@ package cn.bingoogolapple.qrcode.core;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.AsyncTask;
-import android.text.TextUtils;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -83,7 +83,6 @@ class ProcessDataTask extends AsyncTask<Void, Void, ScanResult> {
             e1.printStackTrace();
             try {
                 if (width != 0 && height != 0) {
-                    BGAQRCodeUtil.d("识别失败重试");
                     return qrCodeView.processData(data, width, height, true);
                 } else {
                     return null;
@@ -104,28 +103,15 @@ class ProcessDataTask extends AsyncTask<Void, Void, ScanResult> {
 
         if (mPicturePath != null) {
             return qrCodeView.processBitmapData(BGAQRCodeUtil.getDecodeAbleBitmap(mPicturePath));
+
         } else if (mBitmap != null) {
             ScanResult result = qrCodeView.processBitmapData(mBitmap);
             mBitmap = null;
             return result;
+
         } else {
-            if (BGAQRCodeUtil.isDebug()) {
-                BGAQRCodeUtil.d("两次任务执行的时间间隔：" + (System.currentTimeMillis() - sLastStartTime));
-                sLastStartTime = System.currentTimeMillis();
-            }
             long startTime = System.currentTimeMillis();
-
             ScanResult scanResult = processData(qrCodeView);
-
-            if (BGAQRCodeUtil.isDebug()) {
-                long time = System.currentTimeMillis() - startTime;
-                if (scanResult != null && !TextUtils.isEmpty(scanResult.result)) {
-                    BGAQRCodeUtil.d("识别成功时间为：" + time);
-                } else {
-                    BGAQRCodeUtil.e("识别失败时间为：" + time);
-                }
-            }
-
             return scanResult;
         }
     }

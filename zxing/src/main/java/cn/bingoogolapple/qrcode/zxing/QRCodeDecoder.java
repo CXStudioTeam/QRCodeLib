@@ -19,11 +19,7 @@ import java.util.Map;
 
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 
-/**
- * 作者:王浩 邮件:bingoogolapple@gmail.com
- * 创建时间:16/4/8 下午11:22
- * 描述:解析二维码图片。一维条码、二维码各种类型简介 https://blog.csdn.net/xdg_blog/article/details/52932707
- */
+
 public class QRCodeDecoder {
     static final Map<DecodeHintType, Object> ALL_HINT_MAP = new EnumMap<>(DecodeHintType.class);
 
