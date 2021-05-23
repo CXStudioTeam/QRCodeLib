@@ -7,7 +7,7 @@ import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.cxstudio.qrscanner.common.FanLog;
+import com.cxstudio.corelib.FanLog;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
