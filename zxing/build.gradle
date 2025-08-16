@@ -1,17 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 35
+    compileSdkVersion rootProject.ext.compile_sdk_version
     namespace 'com.google.zxing.core'
-
-    defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 35
-    }
 }
 
 dependencies {
-    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.google.zxing:core:3.5.3'
     implementation project(':QRCodeCore')
     implementation project(':CoreLib')
 }

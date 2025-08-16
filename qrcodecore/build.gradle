@@ -1,13 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion rootProject.ext.compile_sdk_version
     namespace 'com.cxtudios.qrcodecore'
-
-    defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 30
-    }
 }
 
 dependencies {
