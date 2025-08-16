@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.cxtudios.qrcodecore.R;
+
 public class ScanBoxView extends View {
     private int mMoveStepDistance;
     private int mAnimDelayTime;
